@@ -1,0 +1,46 @@
+# Use Python 3.12 slim image
+FROM python:3.12-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    poppler-utils \
+    pkg-config \
+    libicu-dev \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first to leverage Docker cache
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application
+COPY . .
+
+# Create necessary directories
+RUN mkdir -p uploads outputs app/tests/test_files/test_data
+
+# Generate test data and PDFs
+RUN python -c "from app.tests.test_files.test_data_generator import TestDataGenerator; \
+    generator = TestDataGenerator('app/tests/test_files/test_data'); \
+    generator.generate_large_pdf(pages=2); \
+    generator.generate_multilingual_pdf(); \
+    generator.generate_special_chars_pdf(); \
+    generator.generate_edge_cases()"
+
+RUN python scripts/create_test_pdfs.py
+
+# Expose port
+EXPOSE 8000
+
+# Command to run the application
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"] 
