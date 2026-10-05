@@ -343,6 +343,7 @@ class PDFService:
         """Export PDF content to HTML format."""
         try:
             text = self.extract_text(file_obj)
+            html_text = text.replace('\n', '<br>')
             html = f"""
             <!DOCTYPE html>
             <html>
@@ -355,7 +356,7 @@ class PDFService:
                 </style>
             </head>
             <body>
-                {text.replace('\n', '<br>')}
+                {html_text}
             </body>
             </html>
             """
@@ -1058,4 +1059,4 @@ class PDFService:
             return cast(Tuple[float, float, float], rgb)
         except (ValueError, IndexError, AttributeError) as e:
             logger.warning(f"Invalid hex color '{hex_color}', using black: {str(e)}")
-            return (0.0, 0.0, 0.0)  # Return black as default color 
+            return (0.0, 0.0, 0.0)  # Return black as default color
