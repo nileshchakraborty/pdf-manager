@@ -52,7 +52,7 @@ class PDFServiceImpl implements PDFService {
   private createFormRequest(config: any = {}) {
     return {
       ...config,
-      transformRequest: [(data) => data], // Prevent axios from trying to transform FormData
+      transformRequest: [(data: FormData) => data], // Prevent axios from trying to transform FormData
       headers: {
         'Accept': config.responseType === 'blob' ? 'application/pdf' : 'application/json',
         ...config.headers,

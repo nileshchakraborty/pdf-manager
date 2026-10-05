@@ -47,6 +47,7 @@ import {
 } from '@tabler/icons-react';
 import FilePickerDialog from '../components/FilePickerDialog';
 import { pdfService, CompressionLevel, PlagiarismResponse } from '../services/pdfService';
+import type { EditOperation } from '../services/pdfService';
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
@@ -102,12 +103,7 @@ export default function Dashboard() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [plagiarismResults, setPlagiarismResults] = useState<PlagiarismResponse | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [editOperations, setEditOperations] = useState<Array<{
-    type: 'text' | 'image' | 'highlight' | 'delete';
-    content?: string;
-    position?: { x: number; y: number };
-    page?: number;
-  }>>([]);
+  const [editOperations, setEditOperations] = useState<EditOperation[]>([]);
   const [isExportDialogOpen, setIsExportDialogOpen] = useState(false);
   const [exportFormat, setExportFormat] = useState<string>('docx');
   const [isConvertDialogOpen, setIsConvertDialogOpen] = useState(false);

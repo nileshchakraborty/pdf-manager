@@ -6,3 +6,6 @@ uploads/
 test_files/
 .vscode/
 venv/
+__pycache__/
+*.pyc
+frontend/dist/
