@@ -94,7 +94,7 @@ class PDFServiceImpl implements PDFService {
 
       // Check if the response is JSON (error) or PDF (success)
       const contentType = response.headers['content-type'];
-      if (contentType && contentType.includes('application/json')) {
+      if (typeof contentType === 'string' && contentType.includes('application/json')) {
         const errorText = await response.data.text();
         const errorJson = JSON.parse(errorText);
         throw new Error(errorJson.detail || 'Failed to compress PDF');
@@ -152,7 +152,7 @@ class PDFServiceImpl implements PDFService {
 
       // Check if the response is JSON (error) or PDF (success)
       const contentType = response.headers['content-type'];
-      if (contentType && contentType.includes('application/json')) {
+      if (typeof contentType === 'string' && contentType.includes('application/json')) {
         const errorText = await response.data.text();
         const errorJson = JSON.parse(errorText);
         throw new Error(errorJson.detail || 'Failed to merge PDFs');
@@ -214,7 +214,7 @@ class PDFServiceImpl implements PDFService {
 
       // Check if the response is JSON (error) or PDF (success)
       const contentType = response.headers['content-type'];
-      if (contentType && contentType.includes('application/json')) {
+      if (typeof contentType === 'string' && contentType.includes('application/json')) {
         const errorText = await response.data.text();
         const errorJson = JSON.parse(errorText);
         throw new Error(errorJson.detail || 'Failed to preview PDF');
@@ -287,7 +287,7 @@ class PDFServiceImpl implements PDFService {
 
       // Check if the response is JSON (error) or PDF (success)
       const contentType = response.headers['content-type'];
-      if (contentType && contentType.includes('application/json')) {
+      if (typeof contentType === 'string' && contentType.includes('application/json')) {
         const errorText = await response.data.text();
         const errorJson = JSON.parse(errorText);
         console.error('Conversion failed:', errorJson);
@@ -352,7 +352,7 @@ class PDFServiceImpl implements PDFService {
 
       // Check if the response is JSON (error) or file (success)
       const contentType = response.headers['content-type'];
-      if (contentType && contentType.includes('application/json')) {
+      if (typeof contentType === 'string' && contentType.includes('application/json')) {
         const errorText = await response.data.text();
         const errorJson = JSON.parse(errorText);
         throw new Error(errorJson.detail || 'Failed to export PDF');
