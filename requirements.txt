@@ -17,7 +17,7 @@ weasyprint>=60.2
 reportlab>=4.0.8
 
 # Data Processing
-pandas>=2.1.3
+pandas>=2.3.3
 numpy>=1.26.4
 scikit-learn>=1.3.2
 
